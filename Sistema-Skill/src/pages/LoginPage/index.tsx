@@ -2,7 +2,7 @@ import LoginForm from "../../components/LoginForm";
 import styles from "./styles.module.css";
 
 
-export default function App() {
+export default function LoginPage() {
 
   return (
     <main className={styles.bodyContainer}>
@@ -15,5 +15,5 @@ export default function App() {
       </div>
     </main>
   )
-}
+};
 
