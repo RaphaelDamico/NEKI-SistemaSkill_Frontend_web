@@ -1,0 +1,18 @@
+.buttonContainer {
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: .625rem;
+}
+
+.button {
+    width: 80%;
+    height: 80%;
+    border: none;
+    border-radius: 3.125rem;
+    color: #F9F9F9;
+    font-family: "inter", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+}
