@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IUserCredentials } from "../../interfaces";
+import { IUserCredentials, UserSkillResponse } from "../../interfaces";
 
 const api = axios.create({
     baseURL: "http://localhost:8080/"
@@ -38,7 +38,7 @@ const handleAuthError = (error: unknown) => {
     }
 };
 
-export const signupUser = async(payload: IUserCredentials) => {
+export const signupUser = async (payload: IUserCredentials) => {
     const {
         username,
         password
@@ -48,7 +48,7 @@ export const signupUser = async(payload: IUserCredentials) => {
             "username": username,
             "password": password
         });
-        if(response.status == 201)
+        if (response.status == 201)
             alert("Usuário registrado com sucesso");
         else {
             alert("Erro ao registrar usuário, tente novamente.")
@@ -59,7 +59,7 @@ export const signupUser = async(payload: IUserCredentials) => {
     }
 };
 
-export const signinUser = async(payload: IUserCredentials): Promise<void> => {
+export const signinUser = async (payload: IUserCredentials): Promise<void> => {
     const {
         username,
         password
@@ -70,11 +70,46 @@ export const signinUser = async(payload: IUserCredentials): Promise<void> => {
             "password": password
         });
         const token = response.data.token;
-        if(!token)
+        if (!token)
             throw new Error("Token não encontrado na resposta");
         await localStorage.setItem("userToken", JSON.stringify(token));
         alert("Login realizado com sucesso!");
     } catch (error: unknown) {
         handleAuthError(error);
+    }
+};
+
+export const getUserSkills = async (userId: number): Promise<UserSkillResponse | null> => {
+    try {
+        const token = localStorage.getItem("userToken");
+        if (!token) {
+            throw new Error("Token não encontrado");
+        }
+        const response = await api.get<UserSkillResponse>(`users/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar skills do usuário:", error);
+        return null;
+    }
+};
+
+export const deleteUserSkill = async (skillId: number): Promise<void> => {
+    try {
+        const token = localStorage.getItem("userToken");
+        if (!token) {
+            throw new Error("Token não encontrado");
+        }
+
+        await api.delete(`skills/${skillId}`, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        });
+    } catch (error) {
+        console.error(`Erro ao deletar skill com o id ${skillId}:`, error);
     }
 };
