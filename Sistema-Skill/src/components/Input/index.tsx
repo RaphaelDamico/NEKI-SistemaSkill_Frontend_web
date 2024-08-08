@@ -1,12 +1,17 @@
 import { InputProps } from "../../interfaces";
+import { GrFormViewHide, GrFormView } from "react-icons/gr";
 import styles from "./styles.module.css";
+import { useState } from "react";
+import Icon from "../Icon";
 
-const Input: React.FC<InputProps> = ({ label, type, value, onChange, placeholder, name, id }) => {
+const Input: React.FC<InputProps> = ({ label, type, value, onChange, placeholder, name, id, hasIcon }) => {
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+
     return (
         <div className={styles.inputContainer}>
             <label htmlFor={id} className={styles.label}>{label}</label>
             <input
-                type={type}
+                type={showPassword ? "text" : type}
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
@@ -14,6 +19,15 @@ const Input: React.FC<InputProps> = ({ label, type, value, onChange, placeholder
                 name={name}
                 id={id}
             />
+            {hasIcon &&
+                <>
+                    <Icon
+                        name={showPassword ? "viewOpen" : "viewHide"}
+                        className={styles.viewIcon}
+                        onClick={() => setShowPassword(!showPassword)}
+                    />
+                </>
+            }
         </div>
     );
 };

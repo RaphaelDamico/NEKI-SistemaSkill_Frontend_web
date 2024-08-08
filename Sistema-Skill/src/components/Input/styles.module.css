@@ -21,3 +21,13 @@
     padding: .5rem;
     background-color: #D3D3D3;
 }
+
+.viewIcon {
+    position: relative;
+    left: 85%;
+    bottom: 35%;
+
+    &:hover {
+        cursor: pointer;
+    }
+}

@@ -1,53 +1,122 @@
-import { ChangeEvent, useState } from "react";
 import Input from "../Input";
 import styles from "./styles.module.css"
 import Checkbox from "../Checkbox";
 import Button from "../Button";
+import { useNavigate } from "react-router-dom";
+import { useAuthUser } from "../../contexts/AuthUserContext";
+import { useEffect, useState } from "react";
+import { signinUser } from "../../services/api/api";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function LoginForm() {
-    const [login, setLogin] = useState<string>();
-    const [password, setPassword] = useState<string>();
-    const [isChecked, setIsChecked] = useState<boolean>(false);
+    const [hasError, setHasError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [isChecked, setIsChecked] = useState(false);
 
-    function handleLoginChange() {
-        //TODO criar método de login
+    const {
+        setIsAuthenticated,
+        username,
+        setUsername,
+        password,
+        setPassword,
+        loading,
+        setLoading
+    } = useAuthUser();
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const savedUsername = localStorage.getItem("savedUsername");
+        const savedPassword = localStorage.getItem("savedPassword");
+
+        if (savedUsername) {
+            setUsername(savedUsername);
+            setIsChecked(true);
+        }
+        if (savedPassword) {
+            setPassword(savedPassword);
+            setIsChecked(true);
+        }
+    }, [setUsername, setPassword]);
+
+    const loginUser = async() => {
+        setHasError(false);
+        setErrorMessage("");
+        setLoading(true);
+        try {
+            await signinUser({ username, password });
+            setIsAuthenticated(true);
+            navigate("/");
+            if (isChecked) {
+                localStorage.setItem("savedUsername", username);
+                localStorage.setItem("savedPassword", password);
+            } else {
+                localStorage.removeItem("savedUsername");
+                localStorage.removeItem("savedPassword");
+            }
+        } catch (error) {
+            setHasError(true);
+            setErrorMessage("Falha no login. Verifique suas credenciais e tente novamente.");
+            console.error("Falha no login", error);
+        } finally {
+            setLoading(false);
+        }
     };
-    function handlePasswordChange() {
-        //TODO criar método de password
+
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+        if (!isChecked) {
+            localStorage.setItem("savedUsername", username);
+            localStorage.setItem("savedPassword", password);
+        } else {
+            localStorage.removeItem("savedUsername");
+            localStorage.removeItem("savedPassword");
+        }
     };
 
     return (
         <section className={styles.formContainer}>
-            <form className={styles.formContent}>
+            <form
+                className={styles.formContent}
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    loginUser();
+                }}
+            >
                 <Input
                     label="Login"
                     type="text"
-                    value={login}
-                    onChange={handleLoginChange}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     placeholder="Digite seu nome de usuario"
-                    id="login"
+                    id="username"
                 />
                 <Input
                     label="Senha"
                     type="password"
                     value={password}
-                    onChange={handleLoginChange}
+                    onChange={(e) => setPassword(e.target.value)}
                     placeholder="Digite sua senha"
                     id="password"
                 />
                 <Checkbox
                     label={"Salvar senha"}
                     checked={isChecked}
-                    onChange={() => setIsChecked(!isChecked)}
+                    onChange={handleCheckboxChange}
                 />
+                {hasError &&
+                    <div className={styles.errorContainer}>
+                        <span className={styles.errorSpan}>{errorMessage}</span>
+                    </div>
+                }
                 <Button
-                    text={"Entrar"}
-                    onClick={() => {}}
+                    text={loading ? <AiOutlineLoading3Quarters className={styles.loadingIcon} /> : "Entrar"}
+                    type="submit"
                     backgroundColor={"#1A374B"}
                 />
                 <Button
                     text={"Cadastrar"}
-                    onClick={() => {}}
+                    onClick={() => navigate("/cadastro")}
                     backgroundColor={"#4EB888"}
                 />
             </form>

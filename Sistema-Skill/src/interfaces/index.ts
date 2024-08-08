@@ -6,6 +6,7 @@ export interface InputProps {
     placeholder?: string;
     name?: string;
     id?: string;
+    hasIcon?: boolean;
 };
 
 export interface CheckboxProps {
@@ -16,7 +17,13 @@ export interface CheckboxProps {
 };
 
 export interface ButtonProps {
-    text: string;
-    onClick: () => void;
+    text: string | React.ReactNode;
+    onClick?: () => void;
     backgroundColor: string;
+    type?: "submit";
+};
+
+export interface IUserCredentials {
+    username: string;
+    password: string;
 };

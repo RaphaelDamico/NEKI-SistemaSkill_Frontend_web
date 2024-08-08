@@ -1,10 +1,17 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import RegisterPage from './pages/RegisterPage/index.tsx'
+import { BrowserRouter } from 'react-router-dom'
+import RoutesApp from './utils/router/index.tsx'
+import { RegisterUserProvider } from './contexts/RegisterUserContext/index.tsx'
+import { AuthUserProvider } from './contexts/AuthUserContext/index.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <RegisterPage />
-  </StrictMode>,
+  <RegisterUserProvider>
+    <AuthUserProvider>
+      <BrowserRouter>
+        <RoutesApp />
+      </BrowserRouter>
+    </AuthUserProvider>
+  </RegisterUserProvider>
 )

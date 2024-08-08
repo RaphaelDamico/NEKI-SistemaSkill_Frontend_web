@@ -15,4 +15,10 @@
     font-family: "inter", sans-serif;
     font-size: 1rem;
     font-weight: 500;
+    transition: transform 0.3s ease-in-out;
+}
+
+.button:hover {
+    cursor: pointer;
+    transform: scale(1.05);
 }
