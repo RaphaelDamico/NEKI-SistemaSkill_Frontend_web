@@ -10,7 +10,7 @@ export interface InputProps {
 };
 
 export interface CheckboxProps {
-    label: string;
+    label?: string;
     checked: boolean;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     id?: string;
@@ -35,12 +35,18 @@ export interface Skill {
     skillName: string;
     description: string;
     image: string;
+    checked?: boolean;
 };
+
+export interface UserSkillRequest {
+    skillId: number;
+    userId: number;
+}
 
 export interface UserSkill {
     userSkillId: number;
     skill: Skill;
-    level: number;
+    level?: number;
 };
 
 export interface UserSkillResponse {

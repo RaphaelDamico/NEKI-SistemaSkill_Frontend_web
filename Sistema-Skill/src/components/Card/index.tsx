@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Button from "../Button";
 import Icon from "../Icon";
 import styles from "./styles.module.css"
-import { deleteUserSkill, getUserSkills } from "../../services/api/api";
+import { deleteUserSkill, getUserSkills } from "../../api/api";
 import { UserSkill } from "../../interfaces";
 
 interface CardProps {
@@ -18,7 +18,7 @@ export default function Card({userSkill, deleteSkill}: CardProps) {
                 <Button
                     text={
                         <Icon name={"edit"}
-                            color="blue"
+                            color="#356F7A"
                         />
                     }
                 />

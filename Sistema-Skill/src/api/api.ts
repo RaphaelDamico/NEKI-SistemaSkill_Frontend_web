@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IUserCredentials, UserSkillResponse } from "../../interfaces";
+import { IUserCredentials, Skill, UserSkill, UserSkillRequest, UserSkillResponse } from "../interfaces";
 
 const api = axios.create({
     baseURL: "http://localhost:8080/"
@@ -78,6 +78,42 @@ export const signinUser = async (payload: IUserCredentials): Promise<void> => {
         handleAuthError(error);
     }
 };
+
+export const addSkillToUser = async (payload: UserSkillRequest[]): Promise<Skill[] | null> => {
+    try {
+        const token = localStorage.getItem("userToken");
+        if (!token) {
+            throw new Error("Token não encontrado");
+        }
+        const response = await api.post<Skill[]>("skills/add-existing", payload, {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao adicionar skill ao usuário: ", error);
+        return null;
+    }
+};
+
+export const getAllSkills = async (): Promise<Skill[] | null> => {
+    try {
+        const token = localStorage.getItem("userToken");
+        if (!token) {
+            throw new Error("Token não encontrado");
+        }
+        const response = await api.get<Skill[]>("skills", {
+            headers: {
+                Authorization: `Bearer ${JSON.parse(token)}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar skills:", error);
+        return null;
+    }
+}
 
 export const getUserSkills = async (userId: number): Promise<UserSkillResponse | null> => {
     try {

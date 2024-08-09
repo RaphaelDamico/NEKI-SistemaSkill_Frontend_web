@@ -4,7 +4,7 @@ import Button from "../Button";
 import styles from "./styles.module.css"
 import { useRegisterUser } from "../../contexts/RegisterUserContext";
 import { useNavigate } from "react-router-dom";
-import { signupUser } from "../../services/api/api";
+import { signupUser } from "../../api/api";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function RegisterForm() {
