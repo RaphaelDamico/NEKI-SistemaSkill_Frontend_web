@@ -43,6 +43,10 @@ export interface UserSkillRequest {
     userId: number;
 }
 
+export interface UserSkillResponse {
+    skills: Skill[];
+}
+
 export interface UserSkill {
     userSkillId: number;
     skill: Skill;

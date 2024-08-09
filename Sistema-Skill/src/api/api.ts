@@ -70,9 +70,13 @@ export const signinUser = async (payload: IUserCredentials): Promise<void> => {
             "password": password
         });
         const token = response.data.token;
+        const userId = response.data.userId;
         if (!token)
             throw new Error("Token não encontrado na resposta");
+        if (!userId)
+            throw new Error("User ID não encontrado na resposta");
         await localStorage.setItem("userToken", JSON.stringify(token));
+        await localStorage.setItem("userId", JSON.stringify(userId));
         alert("Login realizado com sucesso!");
     } catch (error: unknown) {
         handleAuthError(error);
@@ -131,6 +135,14 @@ export const getUserSkills = async (userId: number): Promise<UserSkillResponse |
         console.error("Erro ao buscar skills do usuário:", error);
         return null;
     }
+};
+
+export const getUserIdFromToken = (): number | null => {
+    const token = localStorage.getItem("userToken");
+    if (!token) return null;
+
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    return decodedToken.userId || null;
 };
 
 export const deleteUserSkill = async (skillId: number): Promise<void> => {
