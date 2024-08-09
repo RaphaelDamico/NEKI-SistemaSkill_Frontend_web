@@ -3,7 +3,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: .625rem;
 }
 
 .button {
@@ -21,4 +20,8 @@
 .button:hover {
     cursor: pointer;
     transform: scale(1.05);
+}
+
+.button--onlyIcon {
+
 }

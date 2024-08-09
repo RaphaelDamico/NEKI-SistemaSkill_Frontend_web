@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuthUser } from "../../../contexts/AuthUserContext";
+import { useAuthUser } from "../../contexts/AuthUserContext";
 
 interface PrivateProps {
     children: JSX.Element;

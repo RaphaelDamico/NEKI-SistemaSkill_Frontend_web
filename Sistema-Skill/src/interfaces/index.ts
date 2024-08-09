@@ -10,7 +10,7 @@ export interface InputProps {
 };
 
 export interface CheckboxProps {
-    label: string;
+    label?: string;
     checked: boolean;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     id?: string;
@@ -19,11 +19,38 @@ export interface CheckboxProps {
 export interface ButtonProps {
     text: string | React.ReactNode;
     onClick?: () => void;
-    backgroundColor: string;
+    backgroundColor?: string;
     type?: "submit";
+    width?: string | number;
+    height?: string | number;
 };
 
 export interface IUserCredentials {
     username: string;
     password: string;
+};
+
+export interface Skill {
+    skillId: number;
+    skillName: string;
+    description: string;
+    image: string;
+    checked?: boolean;
+};
+
+export interface UserSkillRequest {
+    skillId: number;
+    userId: number;
+}
+
+export interface UserSkill {
+    userSkillId: number;
+    skill: Skill;
+    level?: number;
+};
+
+export interface UserSkillResponse {
+    userId: number;
+    username?: string;
+    userSkills: UserSkill[];
 };
