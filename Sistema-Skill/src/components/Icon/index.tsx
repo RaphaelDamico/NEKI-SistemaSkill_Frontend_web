@@ -2,8 +2,6 @@ import { GrFormViewHide, GrFormView } from "react-icons/gr";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 
-
-
 interface IconProps {
     name: string;
     className?: string;

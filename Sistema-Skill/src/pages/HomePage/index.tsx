@@ -3,9 +3,10 @@ import Card from "../../components/Card";
 import styles from "./styles.module.css";
 import { deleteUserSkill, getUserSkills } from "../../api/api";
 import { UserSkill } from "../../interfaces";
-import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import DeleteModal from "../../components/DeleteModal";
+import Header from "../../components/Header";
+import { toast } from "react-toastify";
 
 export default function HomePage() {
     const [userSkillList, setUserSkillList] = useState<UserSkill[]>([]);
@@ -14,10 +15,10 @@ export default function HomePage() {
     const [skillToDelete, setSkillToDelete] = useState<number | null>(null);
 
     useEffect(() => {
-        getuserSkillsList();
+        getUserSkillsList();
     }, []);
 
-    const getuserSkillsList = async () => {
+    const getUserSkillsList = async () => {
         try {
             const data = await getUserSkills(1);
             if (data) {
@@ -31,8 +32,10 @@ export default function HomePage() {
         }
     };
 
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
+    const handleSaveSkills = async () => {
+        await getUserSkillsList();
+        handleCloseModal();
+        toast.success("Skill adicionada à lista do usuário")
     };
 
     const handleCloseModal = () => {
@@ -49,15 +52,10 @@ export default function HomePage() {
         setSkillToDelete(null);
     };
 
-    const handleSaveSkills = async () => {
-        await getuserSkillsList();
-        handleCloseModal();
-    };
-
     const handleDeleteUserSkill = async (userSkillId: number) => {
         try {
             await deleteUserSkill(userSkillId);
-            await getuserSkillsList();
+            await getUserSkillsList();
             setIsDeleteModalOpen(false);
         } catch (error) {
             console.error(error);
@@ -68,22 +66,19 @@ export default function HomePage() {
         if (skillToDelete !== null) {
             await handleDeleteUserSkill(skillToDelete);
             handleCloseModal();
+            toast.success("Skill deletada da lista do usuáro")
         }
     };
 
     return (
         <div className={styles.container}>
-            <header className={styles.headerContainer}>
-                <h1>Lista de Skills</h1>
-                <Button
-                    text={"+ Adicionar skill"}
-                    backgroundColor="#19536E"
-                    width={200}
-                    onClick={handleOpenModal}
-                />
-            </header>
+            <Header setIsModalOpen={setIsModalOpen} />
             {userSkillList.map((skill) => (
-                <Card key={skill.userSkillId} userSkill={skill} deleteSkill={handleOpenDeleteModal} />
+                <Card
+                    key={skill.userSkillId}
+                    userSkill={skill} deleteSkill ={handleOpenDeleteModal}
+                    refreshSkills={getUserSkillsList}
+                />
             ))}
             <Modal
                 isVisibleModal={isModalOpen}

@@ -17,7 +17,7 @@ export interface CheckboxProps {
 };
 
 export interface ButtonProps {
-    text: string | React.ReactNode;
+    content: string | React.ReactNode;
     onClick?: () => void;
     backgroundColor?: string;
     type?: "submit";
@@ -43,10 +43,6 @@ export interface UserSkillRequest {
     userId: number;
 }
 
-export interface UserSkillResponse {
-    skills: Skill[];
-}
-
 export interface UserSkill {
     userSkillId: number;
     skill: Skill;
@@ -58,3 +54,13 @@ export interface UserSkillResponse {
     username?: string;
     userSkills: UserSkill[];
 };
+
+export interface UpdateUserSkill {
+    userSkillId: number;
+    level: number;
+};
+
+export interface UpdateUserSkillLevelResponse {
+    success: boolean;
+    message: string;
+}

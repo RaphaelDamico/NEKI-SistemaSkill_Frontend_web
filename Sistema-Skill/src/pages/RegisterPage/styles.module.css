@@ -37,3 +37,11 @@
     font-size: 1.5625rem;
     color: #F9F9F9;
 }
+
+@media(max-width: 760px) {
+    .bodyContent {
+        flex-direction: column;
+        justify-content: center;
+        gap: 6.25rem;
+    }
+}

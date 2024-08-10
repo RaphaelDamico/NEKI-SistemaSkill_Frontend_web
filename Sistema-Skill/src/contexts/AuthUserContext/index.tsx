@@ -1,9 +1,7 @@
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 
 
 interface AuthUserContextProps {
-    isAuthenticated: boolean;
-    setIsAuthenticated: (isAuthenticated: boolean) => void;
     username: string;
     setUsername: (username: string) => void;
     password: string;
@@ -15,15 +13,12 @@ interface AuthUserContextProps {
 const AuthUserContext = createContext<AuthUserContextProps | undefined>(undefined);
 
 export const AuthUserProvider = ({ children }: { children: ReactNode }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
 
     return(
         <AuthUserContext.Provider value={{
-            isAuthenticated,
-            setIsAuthenticated,
             username,
             setUsername,
             password,

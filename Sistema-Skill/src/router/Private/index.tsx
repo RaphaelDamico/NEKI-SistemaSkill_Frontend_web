@@ -7,15 +7,9 @@ interface PrivateProps {
 
 
 export default function Private({ children }: PrivateProps ) {
-    const { isAuthenticated, loading } =useAuthUser();
+    const token = localStorage.getItem("userToken")
 
-    if(loading) {
-        return(
-            <div></div>
-        );
-    }
-    if(!isAuthenticated) {
+    if(!token)
         return <Navigate to= "/login" />
-    }
     return children;
 }

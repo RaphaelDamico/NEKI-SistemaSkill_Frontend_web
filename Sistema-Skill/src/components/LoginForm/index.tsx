@@ -14,7 +14,6 @@ export default function LoginForm() {
     const [isChecked, setIsChecked] = useState(false);
 
     const {
-        setIsAuthenticated,
         username,
         setUsername,
         password,
@@ -45,7 +44,6 @@ export default function LoginForm() {
         setLoading(true);
         try {
             await signinUser({ username, password });
-            setIsAuthenticated(true);
             navigate("/");
             if (isChecked) {
                 localStorage.setItem("savedUsername", username);
@@ -94,6 +92,7 @@ export default function LoginForm() {
                 <Input
                     label="Senha"
                     type="password"
+                    hasIcon
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Digite sua senha"
@@ -110,12 +109,12 @@ export default function LoginForm() {
                     </div>
                 }
                 <Button
-                    text={loading ? <AiOutlineLoading3Quarters className={styles.loadingIcon} /> : "Entrar"}
+                    content={loading ? <AiOutlineLoading3Quarters className={styles.loadingIcon} /> : "Entrar"}
                     type="submit"
                     backgroundColor={"#1A374B"}
                 />
                 <Button
-                    text={"Cadastrar"}
+                    content={"Cadastrar"}
                     onClick={() => navigate("/cadastro")}
                     backgroundColor={"#4EB888"}
                 />

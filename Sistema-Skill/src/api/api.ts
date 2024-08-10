@@ -1,5 +1,6 @@
 import axios from "axios";
-import { IUserCredentials, Skill, UserSkill, UserSkillRequest, UserSkillResponse } from "../interfaces";
+import { toast } from 'react-toastify';
+import { IUserCredentials, Skill, UpdateUserSkill, UpdateUserSkillLevelResponse, UserSkillRequest, UserSkillResponse } from "../interfaces";
 
 const api = axios.create({
     baseURL: "http://localhost:8080/"
@@ -8,19 +9,20 @@ const api = axios.create({
 const handleRegisterError = (error: unknown) => {
     if (axios.isAxiosError(error)) {
         if (error.response) {
-            alert(`Erro no servidor: ${error.response.data}`);
-            console.log(error.response.data, "Aqui");
+            toast.error("Este nome de usuário já existe");
+            console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
+            return;
         } else if (error.request) {
-            alert("Nenhuma resposta recebida do servidor.");
+            toast.error("Nenhuma resposta recebida do servidor.");
             console.log(error.request);
         } else {
-            alert(`Erro ao configurar a requisição: ${error.message}`);
+            toast.error(`Erro ao configurar a requisição: ${error.message}`);
             console.log('Error', error.message);
         }
     } else {
-        alert(`Erro desconhecido: ${error}`);
+        toast.error(`Erro desconhecido: ${error}`);
         console.log('Error', error);
     }
 };
@@ -38,7 +40,7 @@ const handleAuthError = (error: unknown) => {
     }
 };
 
-export const signupUser = async (payload: IUserCredentials) => {
+export const signupUser = async (payload: IUserCredentials): Promise<void> => {
     const {
         username,
         password
@@ -48,14 +50,18 @@ export const signupUser = async (payload: IUserCredentials) => {
             "username": username,
             "password": password
         });
-        if (response.status == 201)
-            alert("Usuário registrado com sucesso");
+        if (response.status === 201)
+            toast.success("Usuário registrado com sucesso");
         else {
-            alert("Erro ao registrar usuário, tente novamente.")
-            return;
+            toast.error("Erro ao registrar usuário, tente novamente.")
         }
     } catch (error) {
-        handleRegisterError(error);
+        if (axios.isAxiosError(error) && error.response?.status === 409) 
+            throw new Error("Este nome de usuário já existe");
+        else {
+            handleRegisterError(error);
+            throw new Error("Erro desconhecido ao registrar usuário");
+        }
     }
 };
 
@@ -77,7 +83,7 @@ export const signinUser = async (payload: IUserCredentials): Promise<void> => {
             throw new Error("User ID não encontrado na resposta");
         await localStorage.setItem("userToken", JSON.stringify(token));
         await localStorage.setItem("userId", JSON.stringify(userId));
-        alert("Login realizado com sucesso!");
+        toast.success("Login realizado com sucesso");
     } catch (error: unknown) {
         handleAuthError(error);
     }
@@ -143,6 +149,40 @@ export const getUserIdFromToken = (): number | null => {
 
     const decodedToken = JSON.parse(atob(token.split('.')[1]));
     return decodedToken.userId || null;
+};
+
+export const updateUserSkillLevel = async ({ userSkillId, level}:UpdateUserSkill ): Promise<UpdateUserSkillLevelResponse> => {
+    try {
+        const token = localStorage.getItem("userToken");
+        if (!token) throw new Error("Token não encontrado");
+
+        await api.put(`skills/level`,
+            { userSkillId, level },
+            {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            }
+        );
+        return {
+            success: true,
+            message: "Nível da habilidade atualizado com sucesso!",
+        };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.error(`Erro ao atualizar nível da skill com o id ${userSkillId}:`, error.message);
+            return {
+                success: false,
+                message: `Erro: ${error.response?.data || error.message}`
+            };
+        } else {
+            console.error("Erro desconhecido:", error);
+            return {
+                success: false,
+                message: "Erro desconhecido ao atualizar o nível da habilidade.",
+            };
+        }
+    }
 };
 
 export const deleteUserSkill = async (skillId: number): Promise<void> => {

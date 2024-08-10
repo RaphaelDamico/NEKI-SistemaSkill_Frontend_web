@@ -1,7 +1,6 @@
-import { ChangeEvent } from "react";
 import { Skill } from "../../interfaces";
 import Checkbox from "../Checkbox";
-import styles from "./styles.module.css"
+import styles from "./styles.module.css";
 
 interface CardModalProps {
     skill: Skill;

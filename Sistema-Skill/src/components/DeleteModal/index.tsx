@@ -1,5 +1,5 @@
 import Button from "../Button";
-import styles from "./styles.module.css"
+import styles from "./styles.module.css";
 
 interface DeleteModalProps {
     isVisibleModal: boolean;
@@ -20,13 +20,13 @@ export default function DeleteModal({ isVisibleModal, onCancel, onDelete }: Dele
                         </div>
                         <div className={styles.buttonContainer}>
                             <Button
-                                text={"Cancelar"}
+                                content={"Cancelar"}
                                 backgroundColor="#D9534F"
                                 width={100}
                                 onClick={() => onCancel()}
                             />
                             <Button
-                                text={"Deletar"}
+                                content={"Deletar"}
                                 backgroundColor="#356F7A"
                                 width={100}
                                 onClick={() => onDelete()}

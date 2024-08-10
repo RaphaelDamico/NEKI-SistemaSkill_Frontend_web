@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Input from "../Input";
 import Button from "../Button";
-import styles from "./styles.module.css"
 import { useRegisterUser } from "../../contexts/RegisterUserContext";
 import { useNavigate } from "react-router-dom";
 import { signupUser } from "../../api/api";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import styles from "./styles.module.css";
 
 export default function RegisterForm() {
     const [hasError, setHasError] = useState<boolean>(false);
@@ -21,7 +21,7 @@ export default function RegisterForm() {
         loading,
         setLoading
     } = useRegisterUser();
-    
+
     const navigate = useNavigate();
 
     const validatePassword = (password: string) => {
@@ -30,7 +30,7 @@ export default function RegisterForm() {
     };
 
 
-    const registerUser = async() => {
+    const registerUser = async () => {
         if (password !== confirmPassword) {
             setHasError(true);
             setErrorMessage("As senhas não correspondem");
@@ -47,9 +47,14 @@ export default function RegisterForm() {
         setLoading(true);
         try {
             await signupUser({ username, password });
-            navigate("/login")
-        } catch (error) {
-            console.error("Registro do usuário falhou", error);
+            navigate("/login");
+        } catch (error: unknown) {
+            if (error instanceof Error && error.message === "Este nome de usuário já existe") {
+                setHasError(true);
+                setErrorMessage(error.message);
+            } else {
+                console.error("Registro do usuário falhou", error);
+            }
         } finally {
             setLoading(false);
         }
@@ -91,16 +96,16 @@ export default function RegisterForm() {
                     id="password"
                 />
                 {hasError &&
-                <div className={styles.errorContainer}>
-                    <span className={styles.errorSpan}>{errorMessage}</span>
-                </div>}
+                    <div className={styles.errorContainer}>
+                        <span className={styles.errorSpan}>{errorMessage}</span>
+                    </div>}
                 <Button
-                    text={loading ? <AiOutlineLoading3Quarters className={styles.loadingIcon} /> : "Cadastrar"}
+                    content={loading ? <AiOutlineLoading3Quarters className={styles.loadingIcon} /> : "Cadastrar"}
                     type="submit"
                     backgroundColor={"#1A374B"}
                 />
                 <Button
-                    text={"Cancelar"}
+                    content={"Cancelar"}
                     onClick={() => navigate("/login")}
                     backgroundColor={"#4EB888"}
                 />
