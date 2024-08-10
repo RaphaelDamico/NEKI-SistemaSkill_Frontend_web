@@ -11,8 +11,6 @@ function RoutesApp() {
             <Route path="/cadastro" element={<RegisterPage />} />
 
             <Route path="/" element={<Private><HomePage /></Private>} />
-
-            {/* <Route path="*" element={<ErrorPage />} /> */}
         </Routes>
     );
 }

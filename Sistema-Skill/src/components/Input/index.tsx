@@ -1,5 +1,4 @@
 import { InputProps } from "../../interfaces";
-import { GrFormViewHide, GrFormView } from "react-icons/gr";
 import styles from "./styles.module.css";
 import { useState } from "react";
 import Icon from "../Icon";

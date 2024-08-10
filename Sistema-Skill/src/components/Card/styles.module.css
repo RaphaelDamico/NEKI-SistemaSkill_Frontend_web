@@ -23,7 +23,12 @@
     flex-wrap: wrap;
     word-wrap: break-word;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: .5rem;
+
+    h1 {
+        color:#356F7A;
+        font-weight: 600;
+    }
 
     span {
         font-family: sans-serif;

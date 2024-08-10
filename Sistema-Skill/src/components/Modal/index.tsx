@@ -8,22 +8,27 @@ import { Skill, UserSkill, UserSkillRequest } from "../../interfaces";
 interface ModalProps {
     isVisibleModal: boolean;
     onCancel: () => void;
+    onSave: () => void;
+    userSkills: UserSkill[];
 }
 
-export default function Modal({ isVisibleModal, onCancel }: ModalProps) {
+export default function Modal({ isVisibleModal, onCancel, onSave, userSkills }: ModalProps) {
     const [skillsList, setSkillsList] = useState<Skill[] | null>();
 
     useEffect(() => {
         const getSkillsList = async () => {
             try {
                 const data = await getAllSkills();
-                setSkillsList(data);
+                const filteredSkills = data?.filter(skill =>
+                    !userSkills.some(userSkill => userSkill.skill.skillId === skill.skillId)
+                );
+                setSkillsList(filteredSkills);
             } catch (error) {
                 console.error();
             }
         };
         getSkillsList();
-    }, []);
+    }, [userSkills]);
 
     const handleChange = (skill: Skill) => {
         const teste = skillsList?.map((item) => {
@@ -46,6 +51,7 @@ export default function Modal({ isVisibleModal, onCancel }: ModalProps) {
                 skillId: item.skillId,
                 userId: 1
             }) as UserSkillRequest)|| [] );
+            onSave();
         } catch (error) {
             console.error(error);
         }
