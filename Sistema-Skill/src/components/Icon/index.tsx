@@ -1,11 +1,13 @@
 import { GrFormViewHide, GrFormView } from "react-icons/gr";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
+import { SlLogout } from "react-icons/sl";
 
 interface IconProps {
     name: string;
     className?: string;
     color?: string;
+    size?: number;
     onClick?: () => void;
 }
 
@@ -13,10 +15,12 @@ const icons = {
     viewHide: GrFormViewHide,
     viewOpen: GrFormView,
     trash: FaRegTrashAlt,
-    edit: FiEdit
+    edit: FiEdit,
+    logout: SlLogout
+
 };
 
-export default function Icon({ name, className, color, onClick }: IconProps) {
+export default function Icon({ name, className, color, size, onClick }: IconProps) {
     if (!icons[name as keyof typeof icons]) return null;
 
     const IconComponent = icons[name as keyof typeof icons];
@@ -27,6 +31,7 @@ export default function Icon({ name, className, color, onClick }: IconProps) {
                 className={className}
                 color={color}
                 onClick={onClick}
+                size={size}
             />
         </>
     );

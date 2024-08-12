@@ -45,11 +45,15 @@ export default function Modal({ isVisibleModal, onCancel, onSave, userSkills }: 
 
     const handleSave = async () => {
         try {
+            const userIdString = localStorage.getItem("userId");
+            const userId = userIdString ? parseInt(userIdString, 10) : null;
+            if (!userId)
+                throw new Error("User ID não encontrado");
             await addSkillToUser(skillsList?.filter((item) => {
                 return item.checked === true;
             }).map((item) => ({
                 skillId: item.skillId,
-                userId: 1
+                userId: userId
             }) as UserSkillRequest)|| [] );
             onSave();
         } catch (error) {
@@ -73,13 +77,13 @@ export default function Modal({ isVisibleModal, onCancel, onSave, userSkills }: 
                         </div>
                         <div className={styles.buttonContainer}>
                             <Button
-                                text={"Cancelar"}
+                                content={"Cancelar"}
                                 backgroundColor="#D9534F"
                                 width={100}
                                 onClick={() => onCancel()}
                             />
                             <Button
-                                text={"Salvar"}
+                                content={"Salvar"}
                                 backgroundColor="#356F7A"
                                 width={100}
                                 onClick={() => handleSave()}
