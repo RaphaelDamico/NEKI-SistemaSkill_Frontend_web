@@ -3,14 +3,7 @@ import Button from "../Button";
 import CardModal from "../CardModal";
 import styles from "./styles.module.css"
 import { addSkillToUser, getAllSkills } from "../../api/api";
-import { Skill, UserSkill, UserSkillRequest } from "../../interfaces";
-
-interface ModalProps {
-    isVisibleModal: boolean;
-    onCancel: () => void;
-    onSave: () => void;
-    userSkills: UserSkill[];
-}
+import { ModalProps, Skill, UserSkillRequest } from "../../interfaces";
 
 export default function Modal({ isVisibleModal, onCancel, onSave, userSkills }: ModalProps) {
     const [skillsList, setSkillsList] = useState<Skill[] | null>();
@@ -94,4 +87,4 @@ export default function Modal({ isVisibleModal, onCancel, onSave, userSkills }: 
             }
         </>
     );
-}
+};

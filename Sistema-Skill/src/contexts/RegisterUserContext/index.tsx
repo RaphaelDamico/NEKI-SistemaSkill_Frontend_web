@@ -1,15 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-
-interface RegisterUserContextProps {
-    username: string;
-    setUsername: (username: string) => void;
-    password: string;
-    setPassword: (password: string) => void;
-    confirmPassword: string;
-    setConfirmPassword: (confirmPassword: string) => void;
-    loading: boolean;
-    setLoading: (loading: boolean) => void;
-}
+import { RegisterUserContextProps } from "../../interfaces";
 
 const RegisterUserContext = createContext<RegisterUserContextProps | undefined>(undefined);
 
@@ -18,7 +8,6 @@ export const RegisterUserProvider = ({ children }: { children: ReactNode }) => {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
-
 
     return(
         <RegisterUserContext.Provider value={{

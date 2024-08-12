@@ -1,11 +1,8 @@
+import { HeaderProps } from "../../interfaces";
 import Button from "../Button";
 import Icon from "../Icon";
 import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
-
-interface HeaderProps {
-    setIsModalOpen: (value: boolean) => void;
-}
 
 export default function Header({ setIsModalOpen }: HeaderProps) {
     const navigate = useNavigate();
@@ -31,7 +28,6 @@ export default function Header({ setIsModalOpen }: HeaderProps) {
                             name={"logout"}
                             color="#F9F9F9"
                             size={18}
-                            
                         />
 
                     }

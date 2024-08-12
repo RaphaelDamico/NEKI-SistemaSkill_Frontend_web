@@ -1,11 +1,6 @@
-import { Skill } from "../../interfaces";
+import { CardModalProps } from "../../interfaces";
 import Checkbox from "../Checkbox";
 import styles from "./styles.module.css";
-
-interface CardModalProps {
-    skill: Skill;
-    onChange: () => void;
-};
 
 export default function CardModal({skill, onChange}: CardModalProps) {
     return(
@@ -16,4 +11,4 @@ export default function CardModal({skill, onChange}: CardModalProps) {
             </div>
         </div>
     );
-}
+};

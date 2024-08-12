@@ -9,6 +9,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ label, checked, onChange, id }) => 
                 checked={checked}
                 onChange={onChange}
                 id={id}
+                style={{cursor: "pointer"}}
             />
             <label htmlFor={id} className={styles.checkboxLabel}>
                 {label}

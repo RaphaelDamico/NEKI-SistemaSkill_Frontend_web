@@ -1,10 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuthUser } from "../../contexts/AuthUserContext";
-
-interface PrivateProps {
-    children: JSX.Element;
-};
-
+import { PrivateProps } from "../../interfaces";
 
 export default function Private({ children }: PrivateProps ) {
     const token = localStorage.getItem("userToken")
@@ -12,4 +7,4 @@ export default function Private({ children }: PrivateProps ) {
     if(!token)
         return <Navigate to= "/login" />
     return children;
-}
+};

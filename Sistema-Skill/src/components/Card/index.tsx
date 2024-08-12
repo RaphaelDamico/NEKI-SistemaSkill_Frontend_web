@@ -2,16 +2,10 @@ import { useState } from "react";
 import Button from "../Button";
 import Icon from "../Icon";
 import styles from "./styles.module.css";
-import { UserSkill } from "../../interfaces";
+import { CardProps } from "../../interfaces";
 import { updateUserSkillLevel } from "../../api/api";
 import StarRating from "../StarRating";
 import { toast } from "react-toastify";
-
-interface CardProps {
-    userSkill: UserSkill;
-    deleteSkill: (userId: number) => void;
-    refreshSkills: () => void;
-}
 
 export default function Card({ userSkill, deleteSkill, refreshSkills }: CardProps) {
     const [isEditing, setIsEditing] = useState(false);
@@ -60,4 +54,4 @@ export default function Card({ userSkill, deleteSkill, refreshSkills }: CardProp
             </div>
         </div>
     );
-}
+};

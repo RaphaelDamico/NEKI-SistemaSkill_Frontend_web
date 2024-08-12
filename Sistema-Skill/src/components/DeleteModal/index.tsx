@@ -1,11 +1,6 @@
+import { DeleteModalProps } from "../../interfaces";
 import Button from "../Button";
 import styles from "./styles.module.css";
-
-interface DeleteModalProps {
-    isVisibleModal: boolean;
-    onCancel: () => void;
-    onDelete: () => void;
-};
 
 export default function DeleteModal({ isVisibleModal, onCancel, onDelete }: DeleteModalProps) {
 
@@ -37,4 +32,4 @@ export default function DeleteModal({ isVisibleModal, onCancel, onDelete }: Dele
             }
         </>
     );
-}
+};

@@ -112,4 +112,4 @@ export default function RegisterForm() {
             </form>
         </section>
     );
-}
+};

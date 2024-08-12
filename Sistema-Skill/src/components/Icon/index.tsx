@@ -2,14 +2,7 @@ import { GrFormViewHide, GrFormView } from "react-icons/gr";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { SlLogout } from "react-icons/sl";
-
-interface IconProps {
-    name: string;
-    className?: string;
-    color?: string;
-    size?: number;
-    onClick?: () => void;
-}
+import { IconProps } from "../../interfaces";
 
 const icons = {
     viewHide: GrFormViewHide,

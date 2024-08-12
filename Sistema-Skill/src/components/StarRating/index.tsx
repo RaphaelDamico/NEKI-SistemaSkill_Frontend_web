@@ -1,13 +1,7 @@
 import { useState } from "react";
 import styles from "./styles.module.css";
 import Button from "../Button";
-
-interface StarRatingProps {
-    rating: number;
-    onRatingChange: (newRating: number) => void;
-    isEditing: boolean;
-    onSave: () => void;
-}
+import { StarRatingProps } from "../../interfaces";
 
 export default function StarRating({ rating, onRatingChange, isEditing, onSave }: StarRatingProps) {
     const [hoverRating, setHoverRating] = useState(0);
@@ -59,4 +53,4 @@ export default function StarRating({ rating, onRatingChange, isEditing, onSave }
             )}
         </div>
     );
-}
+};

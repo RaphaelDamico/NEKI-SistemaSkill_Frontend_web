@@ -1,14 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-
-
-interface AuthUserContextProps {
-    username: string;
-    setUsername: (username: string) => void;
-    password: string;
-    setPassword: (password: string) => void;
-    loading: boolean;
-    setLoading: (loading: boolean) => void;
-}
+import { AuthUserContextProps } from "../../interfaces";
 
 const AuthUserContext = createContext<AuthUserContextProps | undefined>(undefined);
 
