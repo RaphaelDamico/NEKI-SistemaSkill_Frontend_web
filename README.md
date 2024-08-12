@@ -1,6 +1,6 @@
 # NEKI-SistemaSkill_Frontend_web
 
-Este projeto é uma aplicação web desenvolvida em React para gerenciar habilidades (skills) de usuários. A aplicação oferece funcionalidades de login, cadastro de usuários e gerenciamento de skills, com segurança de privatização de rotas para proteger o acesso às funcionalidades.
+Este projeto é uma aplicação web desenvolvida em React e Vite para gerenciar habilidades (skills) de usuários. A aplicação oferece funcionalidades de login, cadastro de usuários e gerenciamento de skills, com segurança de privatização de rotas para proteger o acesso às funcionalidades.
 
 ## Funcionalidades
 
@@ -28,12 +28,12 @@ Este projeto é uma aplicação web desenvolvida em React para gerenciar habilid
    - **Descrição:** Exibe a lista de skills associadas ao usuário logado e permite gerenciá-las, permitindo que o usuário possa alterar o seu nível, de uma a 5 estrelas.
    - **Componentes:**
      - **Lista de Skills:** Exibe a imagem (URL), nome da skill, nível (em forma de estrelas) e descrição. O nível pode ser editado diretamente na lista.
+     - **Botão de Editar Skill:** Permite que o usuário edite o nível da skill na lista.
      - **Botão de Excluir Skill:** Permite remover uma skill da lista.
      - **Botão de Adicionar Skill:** Abre uma modal para adicionar uma nova skill. A modal inclui:
        - **Lista de Seleção de Skill:** Lista de skills disponíveis cadastradas e  retornadas de um endpoint da api.
        - **Botão de Salvar:** Salva a nova skill associada ao usuário.
        - **Botão de Cancelar:** Fecha a modal sem salvar.
-    - **Botão de Editar Skill:** Permite que o usuário edite o nível da skill na lista.
      - **Botão de Logout:** Encerra a sessão do usuário.
 
 4. **Segurança**
@@ -41,11 +41,18 @@ Este projeto é uma aplicação web desenvolvida em React para gerenciar habilid
 
 ## Como Executar o Projeto
 
-1. **Pré-requisitos:** Certifique-se de ter o [Node.js](https://nodejs.org/) instalado, entre na pasta do projeto e execute o comando: 
-````bash
-npm run dev
-````
+1. **Pré-requisitos:** Certifique-se de ter o [Node.js](https://nodejs.org/)
 
 2. **Clonar o Repositório:**
    ```bash
    git clone https://github.com/RaphaelDamico/NEKI-SistemaSkill_Frontend_web.git
+
+3. **Instalar dependências:**
+```bash
+npm install
+```
+
+4. **Executar aplicação:**
+```bash
+npm run dev
+
