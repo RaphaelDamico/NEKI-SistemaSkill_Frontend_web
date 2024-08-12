@@ -20,7 +20,12 @@ export default function HomePage() {
 
     const getUserSkillsList = async () => {
         try {
-            const data = await getUserSkills(1);
+            const userIdString = localStorage.getItem("userId");
+            const userId = userIdString ? parseInt(userIdString, 10) : null;
+            if (!userId) {
+                throw new Error("User ID não encontrado");
+            }
+            const data = await getUserSkills(userId);
             if (data) {
                 setUserSkillList(data.userSkills);
             } else {

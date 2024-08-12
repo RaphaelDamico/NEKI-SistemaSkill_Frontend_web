@@ -1,4 +1,5 @@
 import Button from "../Button";
+import Icon from "../Icon";
 import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
 
@@ -25,19 +26,15 @@ export default function Header({ setIsModalOpen }: HeaderProps) {
         <header className={styles.headerContainer}>
             <section className={styles.wellcomeAndLogoutContent}>
                 <Button
-                    content={<svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="15"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="4"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0" />
-                        <line x1="12" y1="2" x2="12" y2="12" />
-                    </svg>}
+                    content={
+                        <Icon
+                            name={"logout"}
+                            color="#F9F9F9"
+                            size={18}
+                            
+                        />
+
+                    }
                     backgroundColor="#19536E"
                     width={70}
                     onClick={signout}
